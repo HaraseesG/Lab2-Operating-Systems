@@ -39,8 +39,17 @@ int main(int argc, char const *argv[])
 		//'cd' command functionality
 		//comparing the command token taken with 'cd'
 		if (strcmp(command, "cd") == 0) {
+			if (strlen(arg <= 0)) {
+				printf("No new directory specified.\n");
+			} else {
+				if(chdir(arg) != 0) {
+					printf("Directory not found\n", stderr);
+				} else {
+					chdir(arg);
+					printf("%s\n", getcwd(cwd, sizeof(cwd)));
+				}
+			}
 			
-		
 		}
 
 
