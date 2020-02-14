@@ -33,4 +33,7 @@ void listEnvironment()
 void clear()
 {
 	//print 50 blan lines to clear screen
+	for (x = 1; x <= 50; x++)	{
+		printf("\n");
+	}
 }
