@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 			printf("\n");
 		} 
 		// help - List all available commands
-		else if(strcmp(command, "echo") == 0 || strcmp(command, "echo\n") == 0)
+		else if(strcmp(command, "help") == 0 || strcmp(command, "help\n") == 0)
 		{
 			help();
 		}
