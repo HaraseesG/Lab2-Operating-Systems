@@ -12,7 +12,7 @@
 #define BUFFER_LEN 256
 
 //Return file if there is a file to be read otherwise the standard input stream
-FILE * stream(FILE * file)
+FILE * filestream(FILE * file)
 {
 	if (file != NULL)
 	{
