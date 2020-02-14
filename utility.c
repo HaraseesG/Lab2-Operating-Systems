@@ -20,7 +20,7 @@ void pauseMyShell()
 	//While enter has not been pressed, sleep
 	while (1)	{
 		printf("Paused, press Enter to continue");
-		if (getchar == "\n")	{
+		if (getchar() == '\n')	{
 			break;
 		}
 		sleep(1);
