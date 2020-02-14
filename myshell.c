@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		// clear- clear
+		// clear- clear screen
 		else if(strcmp(command, "clear") == 0 || strcmp(command, "clear\n") == 0)
 		{
 			clear();
@@ -103,9 +103,59 @@ int main(int argc, char *argv[])
 		// dir- Directory
 		else if(strcmp(command, "dir") == 0 || strcmp(command, "dir\n") == 0)
 		{
+			DIR *direct;
+			struct dirent *dir;
 
+			direct = opendir(args[0]);
+			if (direct)
+			{//If directory can be opened
+				while((dir = readdir(direct)) != NULL)
+				{
+					printf("args%s\n", dir -> d_name);
+				}
+				closedir(direct);
+			}
+		}
+		// environ- List environments available
+		else if(strcmp(command, "env") == 0 || strcmp(command, "env\n") == 0)
+		{
+			listEnvironment();
+		}
+		// echo - Echo all passed arguments
+		else if(strcmp(command, "echo") == 0 || strcmp(command, "echo\n") == 0)
+		{
+			for (int i = 0; i <= arguments_passed; i++)
+			{
+				printf("%s ", args[i]);
+			}	
+			printf("\n");
+		} 
+		// help - List all available commands
+		else if(strcmp(command, "echo") == 0 || strcmp(command, "echo\n") == 0)
+		{
+			help();
+		}
+		// pause- Pauses Shell
+		else if(strcmp(command, "pause") == 0 || strcmp(command, "pause\n") == 0)
+		{
+			pauseMyShell();
+		}
+		// quit - Exit shell emulator
+		else if(strcmp(command, "quit") == 0 || strcmp(command, "quit\n") == 0)
+		{
+			return EXIT_SUCCESS;
+		}	
+		else
+		{
+			fputs("Could not recognize command. Use help to display available options.\n", stderr);
 		}
 
+		// After using the buffer, clear it for reuse by while loop
+		memset(command, 0, BUFFER_LEN);
+		memset(args, 0, sizeof(args[BUFFER_LEN][BUFFER_LEN]));
 
+		// update path
+		printf("%s$ ", getcwd(path, sizeof(path)));
 	}
+	return EXIT_SUCCESS;
 }
