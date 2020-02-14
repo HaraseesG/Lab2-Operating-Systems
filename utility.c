@@ -3,7 +3,7 @@
 /*
 OS Lab 2 
 
-Harasees Singh Gill, *WRITE YOUR NAMES HERE*
+Harasees Singh Gill, Siddharth Tripathi, *WRITE YOUR NAMES HERE*
 */
 
 #include <stdio.h>
@@ -33,4 +33,7 @@ void listEnvironment()
 void clear()
 {
 	//print 50 blan lines to clear screen
+	for (x = 1; x <= 50; x++)	{
+		printf("\n");
+	}
 }
