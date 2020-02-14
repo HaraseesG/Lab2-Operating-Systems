@@ -18,6 +18,13 @@ Harasees Singh Gill, Siddharth Tripathi, *WRITE YOUR NAMES HERE*
 void pauseMyShell()
 {
 	//While enter has not been pressed, sleep
+	while (true)	{
+		printf("Paused, press Enter to continue");
+		sleep(10);
+		if (getchar = "\n")	{
+			break;
+		}
+	}
 }
 
 void help()
