@@ -3,7 +3,7 @@
 /*
 OS Lab 2 
 
-Harasees Singh Gill, *WRITE YOUR NAMES HERE*
+Harasees Singh Gill, Siddharth Tripathi, *WRITE YOUR NAMES HERE*
 */
 
 #include <stdio.h>
