@@ -44,7 +44,7 @@ void help()
 //List all environments on the user PATH
 void listEnvironment()
 {	
-	printf("PATH: %s\n", getenc("PATH"));
+	printf("PATH: %s\n", getenv("PATH"));
 }
 
 void clear()
