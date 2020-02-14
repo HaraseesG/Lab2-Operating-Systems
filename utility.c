@@ -1,0 +1,36 @@
+// Define utility functions in here. These are functions used by myshell.c
+
+/*
+OS Lab 2 
+
+Harasees Singh Gill, *WRITE YOUR NAMES HERE*
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <string.h>
+#include "utility.h"
+
+
+void pauseMyShell()
+{
+	//While enter has not been pressed, sleep
+}
+
+void help()
+{
+	//print commands available to user
+}
+
+void listEnvironment()
+{
+	//List all environments on the user PATH
+}
+
+void clear()
+{
+	//print 50 blan lines to clear screen
+}
