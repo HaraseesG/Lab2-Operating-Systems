@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	char buffer[BUFFER_LEN] = {0};
 	char command[BUFFER_LEN] = {0};
 	char args[BUFFER_LEN][BUFFER_LEN] = {{0}};
-	char path[1024]
+	char path[1024];
 	FILE *fp;
 
 	// If there are 2 or more parameters passed, open script
