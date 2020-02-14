@@ -18,10 +18,10 @@ Harasees Singh Gill, Siddharth Tripathi, Peter Levine
 void pauseMyShell()
 {
 	//While enter has not been pressed, sleep
-	while (true)	{
+	while (1)	{
 		printf("Paused, press Enter to continue");
 		sleep(10);
-		if (getchar = "\n")	{
+		if (getchar == "\n")	{
 			break;
 		}
 	}
@@ -50,7 +50,7 @@ void listEnvironment()
 void clear()
 {
 	//print 50 blan lines to clear screen
-	for (x = 1; x <= 50; x++)	{
+	for (int x = 1; x <= 50; x++)	{
 		printf("\n");
 	}
 }
