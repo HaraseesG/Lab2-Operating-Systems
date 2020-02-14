@@ -30,6 +30,14 @@ void pauseMyShell()
 void help()
 {
 	//print commands available to user
+	printf("Welcome to the help manual, here are the following commands: \n");
+	printf("cd <directory> will change the current working directory \n");
+	printf("clr will clear the screen \n");
+	printf("environ will list all environment strings \n");
+	printf("echo <comment> will display <comment> on the screen \n");
+	printf("help will display help manual \n");
+	printf("pause will pause terminal, press 'Enter' to continue \n");
+	printf("quit will exit the shell \n");
 }
 
 //List all environments on the user PATH
