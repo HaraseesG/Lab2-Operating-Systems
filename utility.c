@@ -33,6 +33,7 @@ void help()
 	printf("Welcome to the help manual, here are the following commands: \n");
 	printf("cd <directory> will change the current working directory \n");
 	printf("clr will clear the screen \n");
+	printf("dir <directory> displays contents of <directory> \n");
 	printf("environ will list all environment strings \n");
 	printf("echo <comment> will display <comment> on the screen \n");
 	printf("help will display help manual \n");
