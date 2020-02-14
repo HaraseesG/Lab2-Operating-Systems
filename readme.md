@@ -1,4 +1,3 @@
-# Lab2-Operating-Systems
 # **Lab 2 Operating Systems**
 
 | **Name**            | **Student ID** |
