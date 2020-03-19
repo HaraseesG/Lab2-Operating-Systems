@@ -1,7 +1,7 @@
-CC = clang
-CFLAGS = -Wall -Wextra -std=gnu99
-LFLAGS = 
-LIBS = 
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99
+LFLAGS =
+LIBS =
 SOURCES = hostd.c utility.c queue.c sigtrap.c test.c
 OBJECTS = $(subst .c,.o,$(SOURCES))
 EXE = process hostd test
@@ -12,16 +12,16 @@ debug: CFLAGS += -O0 -g3
 debug: $(EXE)
 
 process : sigtrap.o
-	$(CC) $(CFLAGS) $^ $(LIBS) -o $@ 
+	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 hostd : hostd.o utility.o queue.o
-	$(CC) $(CFLAGS) $^ $(LIBS) -o $@ 
+	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 test : test.o utility.o queue.o
-	$(CC) $(CFLAGS) $^ $(LIBS) -o $@ 
+	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< 
+	$(CC) $(CFLAGS) -c $<
 
 all : $(EXE)
 
