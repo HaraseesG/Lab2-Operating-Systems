@@ -12,3 +12,5 @@
 // extern void clearResources(resources *resources);
 // extern void freeResources(resources *resources, process process);
 // extern void loadJobQueue(char *dispatchlist, node *queue, process tempProcess);
+
+// #endif
