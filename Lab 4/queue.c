@@ -3,7 +3,7 @@
 #include "queue.h"
 
 
-void push(node_pointer *queue, process process) {
+void enqueue(node_pointer *queue, process process) {
   /*initalize a new node_pointer '*currentNode' and set it equal to queue;
   loop through to the end of the queue
   while currentNode -> next != NULL
@@ -21,7 +21,7 @@ void push(node_pointer *queue, process process) {
 	currentNode->next->next = NULL;
 }
 
-process pop(node_pointer *queue) {
+process dequeue(node_pointer *queue) {
   /*check if queue has relevant elements and if it is exit. If not:
   create a struct process (as defined in queue.h) and initialize it to queue -> next -> process;
   set queue -> next to queue -> next -> next
@@ -31,7 +31,7 @@ process pop(node_pointer *queue) {
 		exit(0);
 	}
 	process newProcess = queue->next->process;
-	
+
 	queue->next = queue->next->next;
 	return newProcess;
 }
