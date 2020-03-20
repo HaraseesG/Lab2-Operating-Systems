@@ -288,20 +288,22 @@ int main(int argc, char *argv[])
   process temp_process;
 
   while (real_time_queue -> next != NULL)
-  {//same as above outside of the loop
+  {//same as above, now outside of the loop
     temp_process = &real_time_queue -> next -> process;
 
     if ((address = allocateMem(temp_process-> memBytes, 0, &resource)) != -1)
     {//if memory is available
       temp_process -> memAddress = address;
     }else
-    {
+    {// if memory is not available
       runProcess(real_time_queue, real_time_queue, argv);
     }
     runProcess(real_time_queue, real_time_queue, argv);
   }
 
   clearMem(&resource);
+
+  //I don't feel like commenting all of this. It is literally the exact same comments as above. Reference the above code to learn how it works
   while(p1_queue -> next != NULL)
   {
     temp_process = &p1_queue -> next -> process;
@@ -463,19 +465,19 @@ void runProcess(node_pointer * dequeue_queue, node_pointer * enqueue_queue, char
   }
 
   if (pid < (pid_t) 0)
-  {
+  {//if fork is unsuccessful, exit
     exit(1);
   }
 
   if (pid == 0)
-  {//child process
+  {//child process sends interrupt
     execv("./process", argv);
   }else
   {//parent
     printCurrentProcess(*process);
 
     if (process -> priority == 0)
-    {
+    {//real time process running
       sleep(process -> processTime);
       kill(process -> pid, SIGINT);
 
@@ -484,23 +486,24 @@ void runProcess(node_pointer * dequeue_queue, node_pointer * enqueue_queue, char
         waiter = waitpid(pid, &status, WNOHANG|WUNTRACED);
 
         if (waiter == -1)
-        {
+        {//fork does not return successfully
           printf("Process Failure\n");
           exit(-1);
         }else if (waiter == pid)
         {
           break;
         }else if (waiter == 0)
-        {
+        {//wait for next time slice
           sleep(1);
         }
       }
 
       freeMem(&resource, process -> memAddress, process -> memBytes);
+    
     }else
-    {
+    {// if not a real time process running
       if (process -> paused == 0)
-      {
+      {//check to see if the process is paused
         sleep(1);
         process -> processTime--;
 
@@ -513,15 +516,15 @@ void runProcess(node_pointer * dequeue_queue, node_pointer * enqueue_queue, char
       freeResources(&resource, *process);
 
       if (process -> priority == 1 || process -> priority == 2)
-      {
+      {//if process is interrupted without finishing, increment the priority 
         proc -> priority++;
       }else if (process -> priority == 3)
-      {
+      {//unless the priority is already max in which case keep it the same
         proc -> priority = 3;
       }
 
       if (process -> processTime == 0)
-      {
+      {//if the process has finished wait for the next time slice and increment
         sleep(1);
         process -> processTime--;
         kill(process -> pid, SIGINT);
@@ -543,7 +546,7 @@ void runProcess(node_pointer * dequeue_queue, node_pointer * enqueue_queue, char
           }
         }
       }else
-      {
+      {//if the process has not finished
         enqueue(enqueue_queue, *process);
       }
     }
