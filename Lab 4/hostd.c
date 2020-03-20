@@ -106,8 +106,6 @@ int main(int argc, char *argv[])
         flag = true;
       }
 
-      //check
-      printf("%d\n", flag);
       clearMem(&resource);
 
       if (p1_queue-> next != NULL && flag == false)
@@ -270,7 +268,6 @@ int main(int argc, char *argv[])
         }
       }
 
-      printf("%d\n", flag);
       clearMem(&resource);
 
       if (hold > 0)
