@@ -70,7 +70,7 @@ char       *StripPath(char*);    // strip path from filename
 #define ON_CYAN    "\033[46m"
 #define ON_WHITE   "\033[47m"
 
-#define NORMAL	   "\033[0m"     // not bold/underline/flashing/...
+#define NORMAL     "\033[0m"     // not bold/underline/flashing/...
 
 char * colours [] = { BLACK ON_WHITE, CYAN ON_RED, GREEN ON_MAGENTA,
                       BLUE ON_YELLOW, BLACK ON_CYAN, WHITE ON_RED,
@@ -212,7 +212,7 @@ static void SignalHandler(int sig)        // trap signals from shell/system
         case SIGCONT:
             signal_SIGCONT = TRUE;
             break;
-	case SIGTSTP:
+  case SIGTSTP:
             signal_SIGTSTP = TRUE;
             break;
         case SIGABRT:
