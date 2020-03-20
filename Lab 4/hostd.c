@@ -28,7 +28,7 @@ node_pointer * p2_queue = NULL;
 node_pointer * p3_queue = NULL;
 node_pointer * temp_queue = NULL;
 
-void print_process(process process);
+void print_process(process processes);
 
 int main(int argc, char *argv[])
 {
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
   while (job_queue -> next != NULL || real_time_queue -> next != NULL || p1_queue -> next != NULL || p2_queue -> next != NULL || p3_queue -> next != NULL)
   {// while there are any elements in any of the active queues
-      while (job_queue -> next != NULL && job_queue -> next -> process.arrivalTime <= global_timer)
+      while (job_queue -> next != NULL && job_queue -> next -> processes.arrivalTime <= global_timer)
       {//while there are any jobs in job queue and that job has an arrival time <= the amount of time that has passed, push job to appropriate queue
         current_process = dequeue(job_queue);
         if (current_process.priority == 3)
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
         while (real_time_queue -> next != NULL)
         {//for every element in the real time queue
           hold++;
-          temp_process = &real_time_queue-> next-> process;
+          temp_process = &real_time_queue-> next-> processes;
 
           if ((address = allocateMem(temp_process-> memBytes, 0, &resource)) != -1)
           {//if memory can be allocated
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
         while (p1_queue->next != NULL)
         {
           //set temp_process to next process in p1_queue
-          temp_process = &p1_queue -> next -> process;
+          temp_process = &p1_queue -> next -> processes;
 
           //Set memAddress and allocate appropriate resources
           address = allocateMem(temp_process->memBytes, 64, &resource);
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
               runProcess(temp_queue, p2_queue, argv);
             }else
             {
-              enqueue(p1_queue, pop(p1_queue));
+              enqueue(p1_queue, dequeue(p1_queue));
               clearMem(&resource);
             }
           }
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
         while (p2_queue->next != NULL)
         {
           //set temp_process to next process in p2_queue
-          temp_process = &p2_queue -> next -> process;
+          temp_process = &p2_queue -> next -> processes;
 
           //Set memAddress and allocate appropriate resources
           address = allocateMem(temp_process->memBytes, 64, &resource);
@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
               runProcess(temp_queue, p2_queue, argv);
             }else
             {
-              enqueue(p1_queue, pop(p1_queue));
+              enqueue(p1_queue, dequeue(p1_queue));
               clearMem(&resource);
             }
           }
@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
       {
         while (p3_queue->next != NULL)
         {//set temp_process to next process in p2_queue
-          temp_process = &p3_queue -> next -> process;
+          temp_process = &p3_queue -> next -> processes;
 
           //Set memAddress and allocate appropriate resources
           address = allocateMem(temp_process->memBytes, 64, &resource);
@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
               runProcess(temp_queue, p3_queue, argv);
             }else
             {
-              enqueue(p3_queue, pop(p3_queue));
+              enqueue(p3_queue, dequeue(p3_queue));
               clearMem(&resource);
             }
           }
@@ -275,38 +275,36 @@ int main(int argc, char *argv[])
 
       if (hold > 0)
       {
-        timer += hold;
+        global_timer += hold;
       }else
       {
-        timer ++;
+        global_timer++;
       }
       flag = false;
   }
   //outside of the original while loop and within main
 
   int address, allocated;
-  process temp_process;
+  process *temp_process;
 
   while (real_time_queue -> next != NULL)
-  {//same as above, now outside of the loop
-    temp_process = &real_time_queue -> next -> process;
+  {//same as above outside of the loop
+    temp_process = &real_time_queue -> next -> processes;
 
     if ((address = allocateMem(temp_process-> memBytes, 0, &resource)) != -1)
     {//if memory is available
       temp_process -> memAddress = address;
     }else
-    {// if memory is not available
+    {
       runProcess(real_time_queue, real_time_queue, argv);
     }
     runProcess(real_time_queue, real_time_queue, argv);
   }
 
   clearMem(&resource);
-
-  //I don't feel like commenting all of this. It is literally the exact same comments as above. Reference the above code to learn how it works
   while(p1_queue -> next != NULL)
   {
-    temp_process = &p1_queue -> next -> process;
+    temp_process = &p1_queue -> next -> processes;
 
     address = allocateMem(temp_process -> memBytes, 64, &resource);
     allocated = allocateResources(&resource, *temp_process);
@@ -345,7 +343,7 @@ int main(int argc, char *argv[])
   clearMem(&resource);
   while(p2_queue -> next != NULL)
   {
-    temp_process = &p2_queue -> next -> process;
+    temp_process = &p2_queue -> next -> processes;
 
     address = allocateMem(temp_process -> memBytes, 64, &resource);
     allocated = allocateResources(&resource, *temp_process);
@@ -382,7 +380,7 @@ int main(int argc, char *argv[])
         runProcess(temp_queue, p3_queue, argv);
       }else
       {
-        enqueue(p2_queue, pop(p2_queue));
+        enqueue(p2_queue, dequeue(p2_queue));
         clearMem(&resource);
       }
     }
@@ -391,7 +389,7 @@ int main(int argc, char *argv[])
   clearMem(&resource);
   while(p3_queue -> next != NULL)
   {
-    temp_process = &p3_queue -> next -> process;
+    temp_process = &p3_queue -> next -> processes;
 
     address = allocateMem(temp_process -> memBytes, 64, &resource);
     allocated = allocateResources(&resource, *temp_process);
@@ -434,7 +432,7 @@ int main(int argc, char *argv[])
         runProcess(temp_queue, p3_queue, argv);
       }else
       {
-        enqueue(p3_queue, pop(p3_queue));
+        enqueue(p3_queue, dequeue(p3_queue));
         clearMem(&resource);
       }
     }
@@ -443,9 +441,9 @@ int main(int argc, char *argv[])
   return EXIT_SUCCESS;
 }
 
-void printCurrentProcess(process process)
+void printCurrentProcess(process processes)
 {//print process struct info
-  printf("Arrival Time: %d | Priority: %d | Time Left: %d | Size: %dbytes | Printers: %d | Scanners: %d | Modems: %d, CDs: %d\n", process.arrivalTime, process.priority, process.memBytes, process.printers, process.scanners, process.modems, process.cds);
+  printf("Arrival Time: %d | Priority: %d | Time Left: %d | Size: %dbytes | Printers: %d | Scanners: %d | Modems: %d, CDs: %d\n", processes.arrivalTime, processes.priority, processes.processTime, processes.memBytes, processes.printers, processes.scanners, processes.modems, processes.cds);
 }
 
 void runProcess(node_pointer * dequeue_queue, node_pointer * enqueue_queue, char *argv[])
@@ -453,81 +451,80 @@ void runProcess(node_pointer * dequeue_queue, node_pointer * enqueue_queue, char
   int waiter, status;
   pid_t pid;
 
-  process *process;
+  process *processes;
   process dequeue_job;
   dequeue_job = dequeue(dequeue_queue);
-  process = & dequeue_job;
+  processes = &dequeue_job;
 
   pid = fork();
-  if (process -> pid == 0)
+  if (processes -> pid == 0)
   {
-    process -> pid = (int) pid;
+    processes -> pid = (int) pid;
   }
 
   if (pid < (pid_t) 0)
-  {//if fork is unsuccessful, exit
+  {
     exit(1);
   }
 
   if (pid == 0)
-  {//child process sends interrupt
+  {//child process
     execv("./process", argv);
   }else
   {//parent
-    printCurrentProcess(*process);
+    printCurrentProcess(*processes);
 
-    if (process -> priority == 0)
-    {//real time process running
-      sleep(process -> processTime);
-      kill(process -> pid, SIGINT);
+    if (processes -> priority == 0)
+    {
+      sleep(processes -> processTime);
+      kill(processes -> pid, SIGINT);
 
       for (int i = 0; i < 15; i++)
       {
         waiter = waitpid(pid, &status, WNOHANG|WUNTRACED);
 
         if (waiter == -1)
-        {//fork does not return successfully
+        {
           printf("Process Failure\n");
           exit(-1);
         }else if (waiter == pid)
         {
           break;
         }else if (waiter == 0)
-        {//wait for next time slice
+        {
           sleep(1);
         }
       }
 
-      freeMem(&resource, process -> memAddress, process -> memBytes);
-    
+      freeMem(&resource, processes -> memAddress, processes -> memBytes);
     }else
-    {// if not a real time process running
-      if (process -> paused == 0)
-      {//check to see if the process is paused
+    {
+      if (processes -> paused == 0)
+      {
         sleep(1);
-        process -> processTime--;
+        processes -> processTime--;
 
-        kill(process -> pid, SIGTSTP);
-        process -> paused = 1;
+        kill(processes -> pid, SIGTSTP);
+        processes -> paused = 1;
         sleep(1);
       }
 
-      freeMem(&resource, process -> memAddress, process -> memBytes);
-      freeResources(&resource, *process);
+      freeMem(&resource, processes -> memAddress, processes -> memBytes);
+      freeResources(&resource, *processes);
 
-      if (process -> priority == 1 || process -> priority == 2)
-      {//if process is interrupted without finishing, increment the priority 
-        proc -> priority++;
-      }else if (process -> priority == 3)
-      {//unless the priority is already max in which case keep it the same
-        proc -> priority = 3;
+      if (processes -> priority == 1 || processes -> priority == 2)
+      {
+        processes -> priority++;
+      }else if (processes -> priority == 3)
+      {
+        processes -> priority = 3;
       }
 
-      if (process -> processTime == 0)
-      {//if the process has finished wait for the next time slice and increment
+      if (processes -> processTime == 0)
+      {
         sleep(1);
-        process -> processTime--;
-        kill(process -> pid, SIGINT);
+        processes -> processTime--;
+        kill(processes -> pid, SIGINT);
 
         for (int i = 0; i < 15; i++)
         {
@@ -546,8 +543,8 @@ void runProcess(node_pointer * dequeue_queue, node_pointer * enqueue_queue, char
           }
         }
       }else
-      {//if the process has not finished
-        enqueue(enqueue_queue, *process);
+      {
+        enqueue(enqueue_queue, *processes);
       }
     }
   }

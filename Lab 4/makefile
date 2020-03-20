@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CC = clang
+CFLAGS = -Wall -Wextra -std=gnu99
 LFLAGS =
 LIBS =
 SOURCES = hostd.c utility.c queue.c sigtrap.c test.c

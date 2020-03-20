@@ -6,11 +6,11 @@
 
 extern void initMem(resources *resources);
 extern int allocateMem(int size, int reserve, resources *resources);
-extern int allocateResources(resources *resources, process process);
+extern int allocateResources(resources *resources, process processes);
 extern void clearMem(resources *resources);
 extern void freeMem(resources *resources, int index, int size);
 extern void clearResources(resources *resources);
-extern void freeResources(resources *resources, process process);
-extern void loadJobQueue(char *dispatchlist, node *queue, process tempProcess);
+extern void freeResources(resources *resources, process processes);
+extern void loadJobQueue(char *dispatchlist, node_pointer *queue, process tempProcess);
 
 #endif

@@ -29,7 +29,7 @@ int allocateMem(int size, int reserve, resources * resources) {
     // for every i in range of reserved + 1 (65 onwards to keep first 64 clear), and while i < MEMORY and available < size, increment i
     // if the availableMem of resources at i-1 is 0 and the availableMem at i is 0,
     // increment available by 1
-    for (int = i reserved + 1; i < MEMORY && available < size; i++) {
+    for (int i = reserved + 1; i < MEMORY && available < size; i++) {
     if (resources -> availableMem[i - 1] == 0 && resources -> availableMem[i] == 0) {
       available++;
     }
@@ -62,7 +62,7 @@ int allocateMem(int size, int reserve, resources * resources) {
     return address;
 }
 
-int allocateResources(resources *resource, process process) {
+int allocateResources(resources *resource, process processes) {
   // check to see if there are enough resources available
   // if resource -> printers - process.printers < 0 OR resource -> scanners - process.scanners <0 OR resource -> modems - process.modems <0 OR resource -> cds - process.cds < 0 {return 0}
   // if the printers/scanners/modems/cds held by resources - the printers/scanners/modems/cds held by process is less than 0
@@ -71,28 +71,28 @@ int allocateResources(resources *resource, process process) {
     // set the printers/scanners/modems/cds in resources to itself minus the printers/scanners/modems/cds held by the process
     // return 1
   if (resource -> printers > 0 && resource -> scanners > 0 && resource -> modems > 0 && resource -> cds > 0){
-    if ((resource -> printers - process.printers) < 0){
+    if ((resource -> printers - processes.printers) < 0){
       return 0;
     }else{
-      resource -> printers = resource -> printers - process.printers;
+      resource -> printers = resource -> printers - processes.printers;
     }
 
-    if ((resource -> scanners - process.scanners) < 0){
+    if ((resource -> scanners - processes.scanners) < 0){
       return 0;
     }else{
-      resource -> scanners = resource -> scanners - process.scanners;
+      resource -> scanners = resource -> scanners - processes.scanners;
     }
 
-    if ((resource -> modems - process.modems) < 0){
+    if ((resource -> modems - processes.modems) < 0){
       return 0;
     }else{
-      resource -> modems = resource -> modems - process.modems;
+      resource -> modems = resource -> modems - processes.modems;
     }
 
-    if ((resource -> cds - process.cds) < 0){
+    if ((resource -> cds - processes.cds) < 0){
       return 0;
     }else{
-      resource -> cds = resource -> cds - process.cds;
+      resource -> cds = resource -> cds - processes.cds;
     }
 
     return 1;
@@ -125,12 +125,12 @@ void clearResources(resources *resources) {
   resources -> cds = 2;
 }
 
-void freeResources(resources *resources, process process) {
+void freeResources(resources *resources, process processes) {
   // set all resources to themselves plus the process held resources
-  resources -> printers += process.printers;
-  resources -> scanners += process.scanners;
-  resources -> modems += process.modems;
-  resources -> cds += process.cds;
+  resources -> printers += processes.printers;
+  resources -> scanners += processes.scanners;
+  resources -> modems += processes.modems;
+  resources -> cds += processes.cds;
 }
 
 void loadJobQueue(char *dispatchlist, node_pointer *queue, process tempProcess) {

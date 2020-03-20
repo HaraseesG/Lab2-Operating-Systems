@@ -3,7 +3,7 @@
 #include "queue.h"
 
 
-void enqueue(node_pointer *queue, process process) {
+void enqueue(node_pointer *queue, process processes) {
   /*initalize a new node_pointer '*currentNode' and set it equal to queue;
   loop through to the end of the queue
   while currentNode -> next != NULL
@@ -16,8 +16,8 @@ void enqueue(node_pointer *queue, process process) {
 		currentNode = currentNode->next;
 	}
 
-	currentNode-> next = (*node_pointer)malloc(sizeof(node_pointer));
-	currentNode->next->process = process;
+	currentNode-> next = (node_pointer*)malloc(sizeof(node_pointer));
+	currentNode->next->processes = processes;
 	currentNode->next->next = NULL;
 }
 
@@ -30,7 +30,7 @@ process dequeue(node_pointer *queue) {
 		printf("queue is empty, exiting.\n");
 		exit(0);
 	}
-	process newProcess = queue->next->process;
+	process newProcess = queue->next->processes;
 
 	queue->next = queue->next->next;
 	return newProcess;

@@ -30,10 +30,10 @@ typedef struct
 
 typedef struct node
 {
-  process process;
+  process processes;
   struct node *next;
 } node_pointer;
 
-extern void enqueue(node_pointer *queue, process process);
+extern void enqueue(node_pointer *queue, process processes);
 extern process dequeue(node_pointer *queue);
 #endif
